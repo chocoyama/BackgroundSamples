@@ -16,6 +16,7 @@
 		6B84808224173F800024484A /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808124173F800024484A /* NotificationHelper.swift */; };
 		6B84808424173F880024484A /* MessageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808324173F880024484A /* MessageRepository.swift */; };
 		6B848087241742020024484A /* BackgroundTaskCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B848086241742020024484A /* BackgroundTaskCompletionView.swift */; };
+		6B84808924175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808824175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		6B84808124173F800024484A /* NotificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		6B84808324173F880024484A /* MessageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageRepository.swift; sourceTree = "<group>"; };
 		6B848086241742020024484A /* BackgroundTaskCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskCompletionView.swift; sourceTree = "<group>"; };
+		6B84808824175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscretionaryBackgroundURLSessionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				6B848086241742020024484A /* BackgroundTaskCompletionView.swift */,
+				6B84808824175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				6B84807224173F6C0024484A /* ContentView.swift in Sources */,
 				6B84808224173F800024484A /* NotificationHelper.swift in Sources */,
 				6B848087241742020024484A /* BackgroundTaskCompletionView.swift in Sources */,
+				6B84808924175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
