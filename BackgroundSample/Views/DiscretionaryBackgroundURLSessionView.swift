@@ -10,6 +10,7 @@ import SwiftUI
 
 struct DiscretionaryBackgroundURLSessionView: View {
     private let sample = DiscretionaryBackgroundURLSessionSample()
+    
     var body: some View {
         Button(action: {
             self.sample.request(url: URL(string: "https://www.yahoo.co.jp")!)
@@ -27,6 +28,7 @@ struct DiscretionaryBackgroundURLSessionView_Previews: PreviewProvider {
 
 class DiscretionaryBackgroundURLSessionSample: NSObject {
     func request(url: URL) {
+        // バックグラウンド処理のセッションを作成する
         let config = URLSessionConfiguration.background(withIdentifier: "some unique identifier")
         let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
         
@@ -59,16 +61,18 @@ class DiscretionaryBackgroundURLSessionSample: NSObject {
 }
 
 extension DiscretionaryBackgroundURLSessionSample: URLSessionDownloadDelegate {
+    // すべてのイベントが配信されるとこのメソッドが呼び出される
     func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
         DispatchQueue.main.async {
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                // handleEventsForBackgroundURLSessionで受け渡された完了ハンドラをAppDelegateで保持させておき、取り出す
+                // AppDelegateのhandleEventsForBackgroundURLSessionが実行された時に受け渡された完了ハンドラを保持しておき、ここで取り出す
                 let backgroundCompletionHandler = appDelegate.backgroundCompletionHandler else { return }
-            // これが呼ばれることで、didFinishDownloadingToが実行される
+            // 完了ハンドラを呼び出すと、didFinishDownloadingToが実行される
             backgroundCompletionHandler()
         }
     }
     
+    // 取得したデータをここで参照する
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         // ダウンロードされたデータはこの関数の終了とともに利用できなくなる
         // そのため、このメソッド外でも利用したい場合は、別の場所にデータを退避させる必要がある

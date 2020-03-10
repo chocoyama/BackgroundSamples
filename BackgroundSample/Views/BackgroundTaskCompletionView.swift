@@ -32,43 +32,44 @@ class BackgroundTaskCompletionSample {
     private let messageRepository = MessageRepository()
 
     func send(_ message: Message) {
-        let taskIdentifier = startBackgroundTask()
-        
-        NotificationCenter.default
-            .publisher(for: UIApplication.didEnterBackgroundNotification)
-            .delay(for: 1.0, scheduler: DispatchQueue.main)
-            .sink { _ in
-                // バックグラウンド状態かつbeginBackgroundTaskで開始したタスクがある場合、実行可能な残り時間を取得できる
-                Logger.debug(message: "backgroundTimeRemaining = \(UIApplication.shared.backgroundTimeRemaining)")
-            }.store(in: &cancellables)
-        
-        messageRepository.post(message: message, processTime: 60)
-            .sink(receiveCompletion: { [weak self] (result) in
-                switch result {
-                case .finished: break
-                case .failure: self?.endBackgroundTask(taskIdentifier)
-                }
-            }) { [weak self] _ in
-                self?.endBackgroundTask(taskIdentifier)
-            }.store(in: &cancellables)
-    }
-    
-    private func startBackgroundTask() -> UIBackgroundTaskIdentifier {
+        // 1. バックグラウンドタスクを開始する
         // アプリケーションが閉じられてもタスクを継続するように伝える
-        // expirationHandlerは、バックグラウンド状態でかつendBackgroundTaskが呼ばれなかった場合に呼ばれる
         let taskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            // 4. expirationHandlerは、バックグラウンド状態でかつendBackgroundTaskが呼ばれなかった場合に呼ばれる
             self.cancellables.forEach { $0.cancel() }
             NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に失敗しました。"))
             Logger.debug(message: "cancel background task")
         })
         Logger.debug(message: "start background task")
-        return taskIdentifier
-    }
-    
-    private func endBackgroundTask(_ taskIdentifier: UIBackgroundTaskIdentifier) {
-        // 処理が完了したらタスクを終了させることで、節電やパフォーマンス向上につながる
-        UIApplication.shared.endBackgroundTask(taskIdentifier)
-        Logger.debug(message: "end background task")
+        
+        
+        // 2. 処理の重たい処理を実行する（擬似的に20秒間かかる処理にしている）
+        messageRepository.post(message: message, processTime: 20)
+            .sink(receiveCompletion: { (result) in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に失敗しました。"))
+                    UIApplication.shared.endBackgroundTask(taskIdentifier)
+                    Logger.debug(message: "end background task")
+                }
+            }) { _ in
+                // 3. バックグラウンド処理の終了をシステムに伝える
+                // これを行わないと処理が継続し続けてしまうので、節電やパフォーマンスなどの面で良くない
+                UIApplication.shared.endBackgroundTask(taskIdentifier)
+                Logger.debug(message: "end background task")
+            }.store(in: &cancellables)
+        
+        
+        // バックグラウンド状態かつbeginBackgroundTaskで開始したタスクがある場合、
+        // UIApplicationのbackgroundTimeRemainingプロパティから実行可能な残り時間を取得できる
+        NotificationCenter.default
+            .publisher(for: UIApplication.didEnterBackgroundNotification)
+            .delay(for: 1.0, scheduler: DispatchQueue.main)
+            .map { _ in UIApplication.shared.backgroundTimeRemaining }
+            .sink { backgroundTimeRemaining in Logger.debug(message: "backgroundTimeRemaining = \(backgroundTimeRemaining)") }
+            .store(in: &cancellables)
     }
 }
 
