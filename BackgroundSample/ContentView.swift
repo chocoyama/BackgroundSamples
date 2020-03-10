@@ -10,7 +10,13 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            VStack(spacing: 16.0) {
+                NavigationLink(destination: BackgroundTaskCompletionView()) {
+                    Text("Background Task Completion")
+                }
+            }
+        }
     }
 }
 
