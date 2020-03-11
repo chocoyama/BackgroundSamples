@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B417F7B2418AA93006EFC23 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B417F7A2418AA93006EFC23 /* UserDefault.swift */; };
+		6B417F7D2418AB7B006EFC23 /* BackgroundNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B417F7C2418AB7B006EFC23 /* BackgroundNotificationView.swift */; };
 		6B84806E24173F6C0024484A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84806D24173F6C0024484A /* AppDelegate.swift */; };
 		6B84807024173F6C0024484A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84806F24173F6C0024484A /* SceneDelegate.swift */; };
 		6B84807224173F6C0024484A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84807124173F6C0024484A /* ContentView.swift */; };
@@ -17,9 +19,13 @@
 		6B84808424173F880024484A /* MessageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808324173F880024484A /* MessageRepository.swift */; };
 		6B848087241742020024484A /* BackgroundTaskCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B848086241742020024484A /* BackgroundTaskCompletionView.swift */; };
 		6B84808924175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808824175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift */; };
+		6B84808B241774430024484A /* ProcessingTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808A241774430024484A /* ProcessingTaskView.swift */; };
+		6B84808D241778EA0024484A /* AppRefreshTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808C241778EA0024484A /* AppRefreshTaskView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B417F7A2418AA93006EFC23 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
+		6B417F7C2418AB7B006EFC23 /* BackgroundNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundNotificationView.swift; sourceTree = "<group>"; };
 		6B84806A24173F6C0024484A /* BackgroundSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BackgroundSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B84806D24173F6C0024484A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B84806F24173F6C0024484A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +38,9 @@
 		6B84808324173F880024484A /* MessageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageRepository.swift; sourceTree = "<group>"; };
 		6B848086241742020024484A /* BackgroundTaskCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskCompletionView.swift; sourceTree = "<group>"; };
 		6B84808824175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscretionaryBackgroundURLSessionView.swift; sourceTree = "<group>"; };
+		6B84808A241774430024484A /* ProcessingTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingTaskView.swift; sourceTree = "<group>"; };
+		6B84808C241778EA0024484A /* AppRefreshTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRefreshTaskView.swift; sourceTree = "<group>"; };
+		6B84808E241880050024484A /* BackgroundSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BackgroundSample.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +73,7 @@
 		6B84806C24173F6C0024484A /* BackgroundSample */ = {
 			isa = PBXGroup;
 			children = (
+				6B84808E241880050024484A /* BackgroundSample.entitlements */,
 				6B848085241741EA0024484A /* Views */,
 				6B84806D24173F6C0024484A /* AppDelegate.swift */,
 				6B84806F24173F6C0024484A /* SceneDelegate.swift */,
@@ -73,6 +83,7 @@
 				6B84807B24173F6C0024484A /* Info.plist */,
 				6B84808324173F880024484A /* MessageRepository.swift */,
 				6B84808124173F800024484A /* NotificationHelper.swift */,
+				6B417F7A2418AA93006EFC23 /* UserDefault.swift */,
 				6B84807524173F6C0024484A /* Preview Content */,
 			);
 			path = BackgroundSample;
@@ -90,7 +101,10 @@
 			isa = PBXGroup;
 			children = (
 				6B848086241742020024484A /* BackgroundTaskCompletionView.swift */,
+				6B417F7C2418AB7B006EFC23 /* BackgroundNotificationView.swift */,
 				6B84808824175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift */,
+				6B84808A241774430024484A /* ProcessingTaskView.swift */,
+				6B84808C241778EA0024484A /* AppRefreshTaskView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -166,12 +180,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B84808D241778EA0024484A /* AppRefreshTaskView.swift in Sources */,
 				6B84808424173F880024484A /* MessageRepository.swift in Sources */,
+				6B417F7B2418AA93006EFC23 /* UserDefault.swift in Sources */,
+				6B417F7D2418AB7B006EFC23 /* BackgroundNotificationView.swift in Sources */,
 				6B84806E24173F6C0024484A /* AppDelegate.swift in Sources */,
 				6B84807024173F6C0024484A /* SceneDelegate.swift in Sources */,
 				6B84807224173F6C0024484A /* ContentView.swift in Sources */,
 				6B84808224173F800024484A /* NotificationHelper.swift in Sources */,
 				6B848087241742020024484A /* BackgroundTaskCompletionView.swift in Sources */,
+				6B84808B241774430024484A /* ProcessingTaskView.swift in Sources */,
 				6B84808924175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,8 +326,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BackgroundSample/BackgroundSample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"BackgroundSample/Preview Content\"";
+				DEVELOPMENT_TEAM = 29C6ELZ3SW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = BackgroundSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -327,8 +347,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BackgroundSample/BackgroundSample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"BackgroundSample/Preview Content\"";
+				DEVELOPMENT_TEAM = 29C6ELZ3SW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = BackgroundSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

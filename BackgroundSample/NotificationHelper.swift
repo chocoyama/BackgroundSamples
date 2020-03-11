@@ -17,6 +17,9 @@ class NotificationHelper {
 
             if granted {
                 UNUserNotificationCenter.current().delegate = delegate
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
             }
         })
     }
@@ -35,6 +38,8 @@ class NotificationHelper {
                                                 return content
                                             }(),
                                             trigger: UNTimeIntervalNotificationTrigger(timeInterval: 3.0, repeats: false))
-        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        DispatchQueue.main.async {
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        }
     }
 }
