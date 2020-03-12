@@ -21,4 +21,6 @@ struct UserDefault<T> {
 
 enum UserDefaultKey: String {
     case latestBackgroundPushUpdateDate
+    case latestProcessingTaskExecutedDate
+    case latestAppRefreshTaskExecutedDate
 }

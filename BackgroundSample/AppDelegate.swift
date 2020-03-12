@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     @UserDefault(key: .latestBackgroundPushUpdateDate, defaultValue: nil)
     private var latestBackgroundPushUpdateDate: Date?
-    private(set) var backgroundCompletionHandler: (() -> Void)?
+    var backgroundCompletionHandler: (() -> Void)?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -35,17 +35,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    // バックグラウンドでURLSessionが動いていた場合、処理が完了した直後にシステムがアプリを起動してこれを呼び出す
+    // 第2引数にsessionのIDが受け渡されるので、アプリ起動後の何らかの処理でSessionの再作成を行っている場所がない場合は、これを用いて再生成をする必要がある
+    // 第3引数の完了ハンドラは処理が全て終わった際に呼び出すべきものなので、URLSessionの完了イベントが呼び出されるまで一旦保持しておき、そちら側で呼び出す
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         self.backgroundCompletionHandler = completionHandler
+        // let config = URLSessionConfiguration.background(withIdentifier: "some unique identifier")
+        // let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
     }
     
+    // プッシュ通知に利用するデバイストークンを取得した際に呼び出される
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         print("token = \(token)")
-    }
-    
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        
     }
     
     // バックグラウンドプッシュを受け取った際に呼び出される
@@ -61,17 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    
-    // 通知から起動された際に呼び出される
+    // 通知をタップして起動された際に呼び出される
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         completionHandler()
     }
     
-    func userNotificationCenter(_ center: UNUserNotificationCenter, openSettingsFor notification: UNNotification?) {
-        
-    }
-    
-    // アプリ起動時に通知を受信した際に呼び出される
+    // アプリ起動中に通知を受信した際に呼び出される
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.alert, .badge, .sound])
     }

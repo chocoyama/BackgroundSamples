@@ -18,7 +18,7 @@
 		6B84808224173F800024484A /* NotificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808124173F800024484A /* NotificationHelper.swift */; };
 		6B84808424173F880024484A /* MessageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808324173F880024484A /* MessageRepository.swift */; };
 		6B848087241742020024484A /* BackgroundTaskCompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B848086241742020024484A /* BackgroundTaskCompletionView.swift */; };
-		6B84808924175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808824175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift */; };
+		6B84808924175FB90024484A /* URLSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808824175FB90024484A /* URLSessionView.swift */; };
 		6B84808B241774430024484A /* ProcessingTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808A241774430024484A /* ProcessingTaskView.swift */; };
 		6B84808D241778EA0024484A /* AppRefreshTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B84808C241778EA0024484A /* AppRefreshTaskView.swift */; };
 /* End PBXBuildFile section */
@@ -37,7 +37,7 @@
 		6B84808124173F800024484A /* NotificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationHelper.swift; sourceTree = "<group>"; };
 		6B84808324173F880024484A /* MessageRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageRepository.swift; sourceTree = "<group>"; };
 		6B848086241742020024484A /* BackgroundTaskCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskCompletionView.swift; sourceTree = "<group>"; };
-		6B84808824175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscretionaryBackgroundURLSessionView.swift; sourceTree = "<group>"; };
+		6B84808824175FB90024484A /* URLSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionView.swift; sourceTree = "<group>"; };
 		6B84808A241774430024484A /* ProcessingTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingTaskView.swift; sourceTree = "<group>"; };
 		6B84808C241778EA0024484A /* AppRefreshTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRefreshTaskView.swift; sourceTree = "<group>"; };
 		6B84808E241880050024484A /* BackgroundSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BackgroundSample.entitlements; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 			children = (
 				6B848086241742020024484A /* BackgroundTaskCompletionView.swift */,
 				6B417F7C2418AB7B006EFC23 /* BackgroundNotificationView.swift */,
-				6B84808824175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift */,
+				6B84808824175FB90024484A /* URLSessionView.swift */,
 				6B84808A241774430024484A /* ProcessingTaskView.swift */,
 				6B84808C241778EA0024484A /* AppRefreshTaskView.swift */,
 			);
@@ -190,7 +190,7 @@
 				6B84808224173F800024484A /* NotificationHelper.swift in Sources */,
 				6B848087241742020024484A /* BackgroundTaskCompletionView.swift in Sources */,
 				6B84808B241774430024484A /* ProcessingTaskView.swift in Sources */,
-				6B84808924175FB90024484A /* DiscretionaryBackgroundURLSessionView.swift in Sources */,
+				6B84808924175FB90024484A /* URLSessionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
