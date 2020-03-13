@@ -15,6 +15,7 @@ struct BackgroundTaskCompletionView: View {
     var body: some View {
         VStack(spacing: 32) {
             Button(action: {
+                // ①
                 // 実行直後にバックグラウンドに移行した場合、バックグラウンド状態では処理が停止され、
                 // フォアグラウンドに戻ったタイミングで処理が再開される。
                 self.sample.executeForeground()
@@ -23,6 +24,7 @@ struct BackgroundTaskCompletionView: View {
             }
             
             Button(action: {
+                // ②
                 // 実行直後にバックグラウンドに移行しても、バックグラウンド状態で処理が継続される
                 self.sample.executeBackground()
             }) {
@@ -30,10 +32,11 @@ struct BackgroundTaskCompletionView: View {
             }
             
             Button(action: {
+                // ③
                 // バックグラウンド処理の中で、再度バックグラウンド処理を開始しても、実行可能時間は延長されない
                 self.sample.executeBackgroundForever()
             }) {
-                Text("バックグラウンド処理の中でさらにバックグラウンド処理を開始")
+                Text("バックグラウンド処理の中で\nさらにバックグラウンド処理を開始")
             }
         }
     }
