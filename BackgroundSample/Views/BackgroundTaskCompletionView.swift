@@ -19,14 +19,21 @@ struct BackgroundTaskCompletionView: View {
                 // フォアグラウンドに戻ったタイミングで処理が再開される。
                 self.sample.executeForeground()
             }) {
-                Text("executeForeground")
+                Text("フォアグラウンドで実行")
             }
             
             Button(action: {
                 // 実行直後にバックグラウンドに移行しても、バックグラウンド状態で処理が継続される
                 self.sample.executeBackground()
             }) {
-                Text("executeBackground")
+                Text("バックグラウンドで実行")
+            }
+            
+            Button(action: {
+                // バックグラウンド処理の中で、再度バックグラウンド処理を開始しても、実行可能時間は延長されない
+                self.sample.executeBackgroundForever()
+            }) {
+                Text("バックグラウンド処理の中でさらにバックグラウンド処理を開始")
             }
         }
     }
@@ -50,10 +57,10 @@ class BackgroundTaskCompletionSample {
                 case .finished:
                     break
                 case .failure:
-                    NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に失敗しました。"))
+                    NotificationHelper.postLocalNotification(with: Message(body: "処理が失敗しました"))
                 }
             }) { _ in
-                NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に成功しました。"))
+                NotificationHelper.postLocalNotification(with: Message(body: "処理が成功しました"))
             }.store(in: &cancellables)
     }
     
@@ -63,7 +70,7 @@ class BackgroundTaskCompletionSample {
         let taskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: {
             // 4. expirationHandlerは、バックグラウンド状態でかつendBackgroundTaskが呼ばれなかった場合に呼ばれる
             self.cancellables.forEach { $0.cancel() }
-            NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に失敗しました。"))
+            NotificationHelper.postLocalNotification(with: Message(body: "処理が完了しませんでした"))
             Logger.debug(message: "cancel background task")
         })
         Logger.debug(message: "start background task")
@@ -76,12 +83,12 @@ class BackgroundTaskCompletionSample {
                 case .finished:
                     break
                 case .failure:
-                    NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に失敗しました。"))
+                    NotificationHelper.postLocalNotification(with: Message(body: "処理が失敗しました"))
                     UIApplication.shared.endBackgroundTask(taskIdentifier)
                     Logger.debug(message: "end background task")
                 }
             }) { _ in
-                NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に成功しました。"))
+                NotificationHelper.postLocalNotification(with: Message(body: "処理が成功しました"))
                 // 3. バックグラウンド処理の終了をシステムに伝える
                 // これを行わないと処理が継続し続けてしまうので、節電やパフォーマンスなどの面で良くない
                 UIApplication.shared.endBackgroundTask(taskIdentifier)
@@ -97,6 +104,33 @@ class BackgroundTaskCompletionSample {
             .map { _ in UIApplication.shared.backgroundTimeRemaining }
             .sink { backgroundTimeRemaining in Logger.debug(message: "backgroundTimeRemaining = \(backgroundTimeRemaining)") }
             .store(in: &cancellables)
+    }
+    
+    func executeBackgroundForever() {
+        let taskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            self.cancellables.forEach { $0.cancel() }
+            NotificationHelper.postLocalNotification(with: Message(body: "処理が完了しませんでした"))
+            Logger.debug(message: "cancel background task")
+            self.executeBackgroundForever()
+        })
+        Logger.debug(message: "start background task")
+        
+        sampleRepository.post(processTime: 10)
+            .sink(receiveCompletion: { (result) in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    NotificationHelper.postLocalNotification(with: Message(body: "処理が失敗しました"))
+                    UIApplication.shared.endBackgroundTask(taskIdentifier)
+                    Logger.debug(message: "end background task")
+                }
+            }) { _ in
+                NotificationHelper.postLocalNotification(with: Message(body: "処理が成功しました"))
+                UIApplication.shared.endBackgroundTask(taskIdentifier)
+                Logger.debug(message: "end background task")
+                self.executeBackgroundForever()
+            }.store(in: &cancellables)
     }
 }
 
