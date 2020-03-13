@@ -24,7 +24,7 @@ struct AppRefreshTaskView_Previews: PreviewProvider {
 
 class AppRefreshTaskSample {
     private let taskIdentifier = "jp.co.sample.app_refresh_task"
-    private let messageRepository = MessageRepository()
+    private let sampleRepository = SampleRepository()
     private var cancellables: Set<AnyCancellable> = []
     
     func register() {
@@ -54,7 +54,7 @@ class AppRefreshTaskSample {
     }
     
     private func handle(task: BGAppRefreshTask) {
-        messageRepository.post(message: Message(body: "test"), processTime: 20)
+        sampleRepository.post(processTime: 20)
             .sink(receiveCompletion: { (result) in
                 switch result {
                 case .finished:

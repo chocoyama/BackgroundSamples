@@ -13,10 +13,21 @@ struct BackgroundTaskCompletionView: View {
     private let sample = BackgroundTaskCompletionSample()
     
     var body: some View {
-        Button(action: {
-            self.sample.send(Message(title: nil, subtitle: nil, body: "test"))
-        }) {
-            Text("Button")
+        VStack(spacing: 32) {
+            Button(action: {
+                // 実行直後にバックグラウンドに移行した場合、バックグラウンド状態では処理が停止され、
+                // フォアグラウンドに戻ったタイミングで処理が再開される。
+                self.sample.executeForeground()
+            }) {
+                Text("executeForeground")
+            }
+            
+            Button(action: {
+                // 実行直後にバックグラウンドに移行しても、バックグラウンド状態で処理が継続される
+                self.sample.executeBackground()
+            }) {
+                Text("executeBackground")
+            }
         }
     }
 }
@@ -29,9 +40,24 @@ struct BackgroundTaskCompletionView_Previews: PreviewProvider {
 
 class BackgroundTaskCompletionSample {
     private var cancellables: Set<AnyCancellable> = []
-    private let messageRepository = MessageRepository()
+    private let sampleRepository = SampleRepository()
 
-    func send(_ message: Message) {
+    func executeForeground() {
+        // 処理の重たい処理を実行する（擬似的に10秒間かかる処理にしている）
+        sampleRepository.post(processTime: 10)
+            .sink(receiveCompletion: { (result) in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に失敗しました。"))
+                }
+            }) { _ in
+                NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に成功しました。"))
+            }.store(in: &cancellables)
+    }
+    
+    func executeBackground() {
         // 1. バックグラウンドタスクを開始する
         // アプリケーションが閉じられてもタスクを継続するように伝える
         let taskIdentifier = UIApplication.shared.beginBackgroundTask(expirationHandler: {
@@ -43,8 +69,8 @@ class BackgroundTaskCompletionSample {
         Logger.debug(message: "start background task")
         
         
-        // 2. 処理の重たい処理を実行する（擬似的に20秒間かかる処理にしている）
-        messageRepository.post(message: message, processTime: 20)
+        // 2. 処理の重たい処理を実行する（擬似的に10秒間かかる処理にしている）
+        sampleRepository.post(processTime: 10)
             .sink(receiveCompletion: { (result) in
                 switch result {
                 case .finished:
@@ -55,6 +81,7 @@ class BackgroundTaskCompletionSample {
                     Logger.debug(message: "end background task")
                 }
             }) { _ in
+                NotificationHelper.postLocalNotification(with: Message(body: "メッセージ送信に成功しました。"))
                 // 3. バックグラウンド処理の終了をシステムに伝える
                 // これを行わないと処理が継続し続けてしまうので、節電やパフォーマンスなどの面で良くない
                 UIApplication.shared.endBackgroundTask(taskIdentifier)
@@ -73,9 +100,3 @@ class BackgroundTaskCompletionSample {
     }
 }
 
-
-struct Logger {
-    static func debug(message: String) {
-        print("### \(Date()) \(message)")
-    }
-}
