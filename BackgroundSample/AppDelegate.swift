@@ -52,12 +52,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // バックグラウンドプッシュを受け取った際に呼び出される
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.latestBackgroundPushUpdateDate = Date()
-            NotificationHelper.postLocalNotification(with: Message(body: "Received Background Push"))
-            DispatchQueue.main.asyncAfter(deadline: .now() + 7) {
-                completionHandler(.noData)
-            }
+        self.latestBackgroundPushUpdateDate = Date()
+        NotificationHelper.postLocalNotification(with: Message(body: "Received Background Push"))
+        DispatchQueue.main.async {
+            completionHandler(.noData)
         }
     }
 }
@@ -73,5 +71,4 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([.alert, .badge, .sound])
     }
 }
-
 
