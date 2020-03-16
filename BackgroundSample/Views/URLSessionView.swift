@@ -17,19 +17,19 @@ struct URLSessionView: View {
             Button(action: {
                 self.sample.requestForeground(url: self.url)
             }) {
-                Text("requestForeground")
+                Text("フォアグラウンドで実行")
             }
             
             Button(action: {
                 self.sample.requestBackground(url: self.url)
             }) {
-                Text("requestBackground")
+                Text("バックグラウンドで実行")
             }
             
             Button(action: {
                 self.sample.requestBackgroundDiscretionary(url: self.url)
             }) {
-                Text("requestBackgroundDiscretionary")
+                Text("バックグラウンドでシステム裁量実行")
             }
         }
     }
@@ -67,10 +67,6 @@ class URLSessionSample: NSObject {
         // バックグラウンド処理のセッションを作成する
         let config = URLSessionConfiguration.background(withIdentifier: UUID().uuidString)
         let session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
-        
-        // タスク完了時にシステムにアプリをバックグラウンドで再開または起動させる
-        // 起動ハンドラとして、application(_:handleEventsForBackgroundURLSession:completionHandler:)が呼ばれる
-        config.sessionSendsLaunchEvents = true
         
         session.downloadTask(with: URLRequest(url: url)).resume()
     }
