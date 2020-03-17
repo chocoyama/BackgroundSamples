@@ -15,11 +15,14 @@ struct ContentView: View {
                 NavigationLink(destination: BackgroundTaskCompletionView()) {
                     Text("Background Task Completion")
                 }
+                NavigationLink(destination: BackgroundNotificationView()) {
+                    Text("Background Notification (Silent Push)")
+                }
                 NavigationLink(destination: URLSessionView()) {
                     Text("URLSessionView")
                 }
-                NavigationLink(destination: BackgroundNotificationView()) {
-                    Text("Background Notification (Silent Push)")
+                NavigationLink(destination: AppRefreshTaskView()) {
+                    Text("AppRefreshTask")
                 }
             }
         }

@@ -51,11 +51,11 @@ struct ProcessingTaskSample {
     private func schedule() {
         let request = BGProcessingTaskRequest(identifier: taskIdentifier)
         
-        // 通信が必要な場合はtrueにする（falseだと通信がない時間にも起動される）
+        // 通信が必要な場合はtrueにする（デフォルトはfalseで、この場合通信がない時間にも起動される）
         request.requiresNetworkConnectivity = true
         
         // 充電中に実行したい処理の場合はtrueにする
-        // さらにこれがtrueの時にCPU Monitorが無効になる
+        // これがtrueの時にCPU Monitorが無効になる
         request.requiresExternalPower = true
         
         do {

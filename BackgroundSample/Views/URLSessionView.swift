@@ -94,12 +94,13 @@ class URLSessionSample: NSObject {
         
         // 最短開始日時
         // 実行を遅らせたい場合に指定する
-        task.earliestBeginDate = Date(timeIntervalSinceNow: 2 * 60 * 60)
+        let fiveMinutes: TimeInterval = 5 * 60
+        task.earliestBeginDate = Date(timeIntervalSinceNow: fiveMinutes)
         
         // 想定ダウンロードサイズ
         // ダウンロードの作業量をシステムに知らせておくことで、システムによるスケジューリングを最適化させる
-        task.countOfBytesClientExpectsToSend = 160
-        task.countOfBytesClientExpectsToReceive = 4096
+        task.countOfBytesClientExpectsToSend = 200
+        task.countOfBytesClientExpectsToReceive = 500 * 1024
         task.resume()
     }
 }
