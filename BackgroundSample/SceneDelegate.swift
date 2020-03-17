@@ -13,8 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
-    private let processingTask = ProcessingTaskSample()
     private let appRefreshTask = AppRefreshTaskSample()
+    private let processingTask = ProcessingTaskSample()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         appRefreshTask.register()
-//        processingTask.register()
+        processingTask.register()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -63,8 +63,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-//        processingTask.scheduleIfNeeded()
-//        AppRefreshTaskSample.schedule()
     }
 }
 

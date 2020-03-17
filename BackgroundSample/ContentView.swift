@@ -19,10 +19,10 @@ struct ContentView: View {
                     Text("Background Notification (Silent Push)")
                 }
                 NavigationLink(destination: URLSessionView()) {
-                    Text("URLSessionView")
+                    Text("Background URLSession")
                 }
-                NavigationLink(destination: AppRefreshTaskView()) {
-                    Text("AppRefreshTask")
+                NavigationLink(destination: BackgroundTasksView()) {
+                    Text("Background Tasks")
                 }
             }
         }
