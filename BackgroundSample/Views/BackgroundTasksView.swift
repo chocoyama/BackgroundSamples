@@ -44,6 +44,7 @@ class AppRefreshTaskSample {
         // Queue: nilを渡すとシステムがキューを作成する
         // launchHandler: Appの起動時に呼ばれる
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Self.taskIdentifier, using: nil, launchHandler: { task in
+            Logger.debug(message: "AppRefreshTasksのlaunchハンドラが呼ばれた")
             // BGTaskRequestは1度の起動にしか対応しないので、
             // 1日中Appをリフレッシュさせたい場合は、ハンドラ内で再度スケジューリングをさせる
             Self.schedule()
@@ -69,6 +70,7 @@ class AppRefreshTaskSample {
     
     private func handle(task: BGAppRefreshTask) {
         sampleRepository.post(processTime: 10)
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { (result) in
                 switch result {
                 case .finished:
@@ -103,6 +105,7 @@ class ProcessingTaskSample {
         // Queue: nilを渡すとシステムがキューを作成する
         // launchHandler: Appの起動時に呼ばれる
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Self.taskIdentifier, using: nil, launchHandler: { (task) in
+            Logger.debug(message: "ProcessingTasksのlaunchハンドラが呼ばれた")
             // BGTaskRequestは1度の起動にしか対応しないので、
             // 1日中Appをリフレッシュさせたい場合は、ハンドラ内で再度スケジューリングをさせる
             Self.schedule()
@@ -129,6 +132,7 @@ class ProcessingTaskSample {
     
     private func handle(task: BGProcessingTask) {
         sampleRepository.post(processTime: 60)
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { (result) in
                 switch result {
                 case .finished:
